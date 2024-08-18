@@ -21,15 +21,13 @@ public class Cliente {
 
         while (true) {
             System.out.println("" +
-                    " 1 - Cadastrar jogador   | 2 - Alterar jogador " +
-                    "\n 3 - Recuperar jogador | 4 - Excluir jogador " +
-                    "\n 5 - Listar jogador    | 6 - Cadastrar tecnico " +
-                    "\n 7 - Alterar tecnico   | 8 - Recupera tecnico " +
-                    "\n 9 - Excluir tecnico   | 10 - Listar tecnico  " +
-                    "\n 11 - Cadastrar time   | 12 - Alterar time " +
-                    "\n 13 - Recuperar time   | 14 - Excluir time " +
-                    "\n 15 - Listar time      | 16 - Inserir jogador no time " +
-                    "\n 17 - Inserir Tecnico no time");
+                    " 1 - Cadastrar jogador        | 2 - Alterar jogador          | 3 - Recuperar jogador" +
+                    "\n 4 - Excluir jogador          | 5 - Listar jogador           | 6 - Cadastrar tecnico" +
+                    "\n 7 - Alterar tecnico          | 8 - Recuperar tecnico        | 9 - Excluir tecnico" +
+                    "\n 10 - Listar tecnico          | 11 - Cadastrar time          | 12 - Alterar time" +
+                    "\n 13 - Recuperar time          | 14 - Excluir time            | 15 - Listar time" +
+                    "\n 16 - Inserir jogador no time | 17 - Excluir jogador do time | 18 - Inserir tecnico no time" +
+                    "\n 19 - Excluir tecnico no time | 20 - Terminar");
             int opc = s.nextInt();
 
             switch (opc) {
