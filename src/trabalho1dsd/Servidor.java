@@ -238,7 +238,7 @@ public class Servidor {
                             for (Tecnico tec : tecnicoDAO.getTecnicos()) {
                                 if (tec.getTime() != null) {
                                     if (t.getNome().equals(tec.getTime().getNome())) {
-                                        retorno += " - " + tec.toString();
+                                        retorno += "\n - " + tec.toString();
                                     }
                                 }
                             }
@@ -246,7 +246,7 @@ public class Servidor {
                             for (Jogador j : jogadorDAO.getJogadores()) {
                                 if (j.getTime() != null) {
                                     if (t.getNome().equals(j.getTime().getNome())) {
-                                        retorno += " - " + j.toString();
+                                        retorno += "\n - " + j.toString();
                                     }
                                 }
                             }
