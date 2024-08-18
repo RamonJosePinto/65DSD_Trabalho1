@@ -55,6 +55,6 @@ public class Pessoa {
 
     @Override
     public String toString() {
-        return this.getCpf() + ";" + this.getNome() + ";" + this.getEndereco() + ";" + (this.getTime() != null ? this.getTime().getNome() : "Sem time.");
+        return this.getCpf() + ";" + this.getNome() + ";" + this.getEndereco() + ";" + (this.getTime() != null ? this.getTime().getNome() : "Sem time");
     }
 }
