@@ -5,14 +5,14 @@
 package trabalho1dsd.model;
 
 /**
- *
  * @author Ramon
  */
 public class Pessoa {
-    
+
     private String cpf;
     private String nome;
     private String endereco;
+    private Time time;
 
     public String getCpf() {
         return cpf;
@@ -37,12 +37,20 @@ public class Pessoa {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-    
-    
-    public Pessoa(String cpf, String nome, String endereco) {
+
+    public Time getTime() {
+        return time;
+    }
+
+    public void setTime(Time time) {
+        this.time = time;
+    }
+
+    public Pessoa(String cpf, String nome, String endereco, Time time) {
         this.cpf = cpf;
         this.nome = nome;
         this.endereco = endereco;
+        this.time = time;
     }
 
     @Override

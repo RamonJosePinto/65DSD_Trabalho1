@@ -62,6 +62,7 @@ public class Time {
 
     public void addPessoa(Pessoa pessoa) {
         this.pessoas.add(pessoa);
+        pessoa.setTime(this);
     }
 
     public void removePessoa(Pessoa pessoa) {
@@ -79,6 +80,6 @@ public class Time {
 
     @Override
     public String toString() {
-        return this.getNome() + ";" + this.getEndereco() + ";" + this.getPais() + ";" + this.getAnoFundacao()+";["+this.getPessoas().toString()+"]";
+        return this.getNome() + ";" + this.getEndereco() + ";" + this.getPais() + ";" + this.getAnoFundacao() + ";[" + this.getPessoas().toString() + "]";
     }
 }

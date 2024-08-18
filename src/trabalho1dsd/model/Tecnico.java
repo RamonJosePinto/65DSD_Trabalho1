@@ -12,8 +12,8 @@ public class Tecnico extends Pessoa {
     private String vigenciaInicio;
     private String vigenciaTermino;
 
-    public Tecnico(String cpf, String nome, String endereco, String vigenciaInicio, String vigenciaTermino) {
-        super(cpf, nome, endereco);
+    public Tecnico(String cpf, String nome, String endereco, String vigenciaInicio, String vigenciaTermino, Time time) {
+        super(cpf, nome, endereco, time);
         this.vigenciaInicio = vigenciaInicio;
         this.vigenciaTermino = vigenciaTermino;
     }

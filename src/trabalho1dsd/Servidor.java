@@ -41,7 +41,7 @@ public class Servidor {
 
                 switch (campos[0]) {
                     case "INSERT_JOGADOR": {
-                        Jogador j = new Jogador(campos[1], campos[2], campos[3], campos[4], campos[5], Integer.parseInt(campos[6]));
+                        Jogador j = new Jogador(campos[1], campos[2], campos[3], campos[4], campos[5], Integer.parseInt(campos[6]), null);
                         jogadorDAO.salvar(j);
                         break;
                     }
@@ -99,7 +99,7 @@ public class Servidor {
                         break;
                     }
                     case "INSERT_TECNICO": {
-                        Tecnico t = new Tecnico(campos[1], campos[2], campos[3], campos[4], campos[5]);
+                        Tecnico t = new Tecnico(campos[1], campos[2], campos[3], campos[4], campos[5], null);
                         tecnicoDAO.salvar(t);
                         break;
                     }
