@@ -232,11 +232,11 @@ public class Servidor {
                         for (Time t : timeDAO.getTimes()) {
                             out.println(t.toString());
                             for (Tecnico tec : tecnicoDAO.getTecnicos()) {
-                                if (t.equals(tec.getTime()))
+                                if (t.getNome().equals(tec.getTime().getNome()))
                                     out.println(tec.toString());
                             }
                             for (Jogador j : jogadorDAO.getJogadores()) {
-                                if (t.equals(j.getTime()))
+                                if (t.getNome().equals(j.getTime().getNome()))
                                     out.println(j.toString());
                             }
                         }
