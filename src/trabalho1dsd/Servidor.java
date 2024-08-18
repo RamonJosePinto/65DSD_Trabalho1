@@ -4,29 +4,27 @@
  */
 package trabalho1dsd;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+
+import trabalho1dsd.dao.*;
+import trabalho1dsd.model.Jogador;
+import trabalho1dsd.model.Tecnico;
+import trabalho1dsd.model.Time;
+
+import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 /**
- *
  * @author 10068610920
  */
 public class Servidor {
 
     public static void main(String[] args) throws IOException {
-        Scanner s = new Scanner(System.in);
         ServerSocket server = new ServerSocket(80);
         server.setReuseAddress(true);
-        //TODO: de primeiro momento vai ficar aqui, necessário criar um DAO ou algo do tipo para a lista de pessoas
-        List<Pessoa> pessoas = new ArrayList<Pessoa>();
+        TimeDAO timeDAO = new TimeDAOImpl();
+        JogadorDAO jogadorDAO = new JogadorDAOImpl();
+        TecnicoDAO tecnicoDAO = new TecnicoDAOImpl();
 
         while (true) {
             System.out.println("Aguardando conexão...");
@@ -37,65 +35,280 @@ public class Servidor {
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
 
                 String mensagemRecebida = in.readLine();
-                System.out.println(mensagemRecebida);
                 String[] campos = mensagemRecebida.split(";");
-                for (int i = 0; i < campos.length; i++) {
-                    System.out.println(campos[i]);
-                }
 
                 switch (campos[0]) {
-                    case "INSERT": {
-                        Pessoa p = new Pessoa(campos[1], campos[2], campos[3]);
-                        pessoas.add(p);
+                    case "INSERT_JOGADOR": {
+                        Jogador j = new Jogador(campos[1], campos[2], campos[3], campos[4], campos[5], Integer.parseInt(campos[6]));
+                        jogadorDAO.salvar(j);
                         break;
                     }
-                    case "UPDATE": {
-                        Pessoa pessoa = encontrarPessoaPorCpf(pessoas, campos[1]);
-                        if (pessoa != null) {
-                            pessoa.setNome(campos[2]);
-                            pessoa.setEndereco(campos[3]);
-                            out.println("Pessoa atualizada com sucesso");
+                    case "UPDATE_JOGADOR": {
+                        Jogador j = jogadorDAO.encontrarPorCpf(campos[1]);
+                        if (j != null) {
+                            j.setNome(campos[2]);
+                            j.setEndereco(campos[3]);
+                            j.setPosicao(campos[4]);
+                            j.setNacionalidade(campos[5]);
+                            j.setPosicao(campos[6]);
+                            out.println("Jogador atualizado com sucesso");
                         } else {
-                            out.println("Pessoa não encontrada");
+                            out.println("Jogador não encontrado");
                         }
                         break;
                     }
-                    case "GET": {
-                        if (pessoas.size() == 0) {
-                            out.println("Sem pessoas cadastradas");
+                    case "GET_JOGADOR": {
+                        if (jogadorDAO.getJogadores().isEmpty()) {
+                            out.println("Sem jogadores cadastrados");
                             break;
                         }
-                        Pessoa p = encontrarPessoaPorCpf(pessoas, campos[1]);
-                        if (p != null) {
-                            out.println(p.getCpf() + ";" + p.getNome() + ";" + p.getEndereco());
+                        Jogador j = jogadorDAO.encontrarPorCpf(campos[1]);
+                        if (j != null) {
+                            out.println(j.toString());
                         } else {
-                            out.println("Pessoa não encontrada");
+                            out.println("Jogador não encontrado");
                         }
                         break;
                     }
-                    case "DELETE": {
-                        if (pessoas.size() == 0) {
-                            out.println("Sem pessoas cadastradas");
+                    case "DELETE_JOGADOR": {
+                        if (jogadorDAO.getJogadores().isEmpty()) {
+                            out.println("Sem jogadores cadastrados");
                             break;
                         }
-                        Pessoa p = encontrarPessoaPorCpf(pessoas, campos[1]);
-                        if (p != null) {
-                            pessoas.remove(p);
-                            out.println("Pessoa removida com sucesso");
+                        Jogador j = jogadorDAO.encontrarPorCpf(campos[1]);
+                        if (j != null) {
+                            jogadorDAO.excluir(j);
+                            out.println("Jogador removido com sucesso");
                         } else {
-                            out.println("Pessoa não encontrada");
+                            out.println("Jogador não encontrado");
                         }
                         break;
                     }
-                    case "LIST": {
-                        if (pessoas.size() == 0) {
+                    case "LIST_JOGADOR": {
+                        if (jogadorDAO.getJogadores().isEmpty()) {
                             out.println(0);
                             break;
                         }
-                        out.println(pessoas.size());
-                        for (Pessoa p : pessoas) {
-                            out.println(p.getCpf() + ";" + p.getNome() + ";" + p.getEndereco());
+                        out.println(jogadorDAO.getJogadores().size());
+                        for (Jogador j : jogadorDAO.getJogadores()) {
+                            out.println(j.toString());
                         }
+                        break;
+                    }
+                    case "INSERT_TECNICO": {
+                        Tecnico t = new Tecnico(campos[1], campos[2], campos[3], campos[4], campos[5]);
+                        tecnicoDAO.salvar(t);
+                        break;
+                    }
+                    case "UPDATE_TECNICO": {
+                        Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
+                        if (t != null) {
+                            t.setNome(campos[2]);
+                            t.setEndereco(campos[3]);
+                            t.setVigenciaInicio(campos[4]);
+                            t.setVigenciaTermino(campos[5]);
+                            out.println("Tecnico atualizado com sucesso");
+                        } else {
+                            out.println("Tecnico não encontrado");
+                        }
+                        break;
+                    }
+                    case "GET_TECNICO": {
+                        if (tecnicoDAO.getTecnicos().isEmpty()) {
+                            out.println("Sem tecnicos cadastrados");
+                            break;
+                        }
+                        Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
+                        if (t != null) {
+                            out.println(t.toString());
+                        } else {
+                            out.println("Tecnico não encontrado");
+                        }
+                        break;
+                    }
+                    case "DELETE_TECNICO": {
+                        if (tecnicoDAO.getTecnicos().isEmpty()) {
+                            out.println("Sem tecnicos cadastrados");
+                            break;
+                        }
+                        Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
+                        if (t != null) {
+                            tecnicoDAO.excluir(t);
+                            out.println("Tecnico removido com sucesso");
+                        } else {
+                            out.println("Tecnico não encontrado");
+                        }
+                        break;
+                    }
+                    case "LIST_TECNICO": {
+                        if (tecnicoDAO.getTecnicos().isEmpty()) {
+                            out.println(0);
+                            break;
+                        }
+                        out.println(tecnicoDAO.getTecnicos().size());
+                        for (Tecnico t : tecnicoDAO.getTecnicos()) {
+                            out.println(t.toString());
+                        }
+                        break;
+                    }
+                    case "INSERT_TIME": {
+                        Time t = new Time(campos[1], campos[2], campos[3], Integer.parseInt(campos[4]));
+                        timeDAO.salvar(t);
+                        break;
+                    }
+
+                    case "UPDATE_TIME": {
+                        Time t = timeDAO.encontrarPorNome(campos[1]);
+                        if (t != null) {
+                            t.setEndereco(campos[2]);
+                            t.setPais(campos[3]);
+                            t.setAnoFundacao(Integer.parseInt(campos[4]));
+                            out.println("Time atualizado com sucesso");
+                        } else {
+                            out.println("Time não encontrado");
+                        }
+                        break;
+                    }
+                    case "GET_TIME": {
+                        if (timeDAO.getTimes().isEmpty()) {
+                            out.println("Sem times cadastrados");
+                            break;
+                        }
+                        Time t = timeDAO.encontrarPorNome(campos[1]);
+                        if (t != null) {
+                            out.println(t.toString());
+                        } else {
+                            out.println("Time não encontrado");
+                        }
+                        break;
+                    }
+                    case "DELETE_TIME": {
+                        if (timeDAO.getTimes().isEmpty()) {
+                            out.println("Sem times cadastrados");
+                            break;
+                        }
+                        Time t = timeDAO.encontrarPorNome(campos[1]);
+                        if (t != null) {
+                            timeDAO.excluir(t);
+                            out.println("Time removido com sucesso");
+                        } else {
+                            out.println("Time não encontrado");
+                        }
+                        break;
+                    }
+                    case "LIST_TIME": {
+                        if (timeDAO.getTimes().isEmpty()) {
+                            out.println(0);
+                            break;
+                        }
+                        out.println(timeDAO.getTimes().size());
+                        for (Time t : timeDAO.getTimes()) {
+                            out.println(t.toString());
+                        }
+                        break;
+                    }
+                    case "INSERT_JOGADOR_TIME": {
+                        if (jogadorDAO.getJogadores().isEmpty()) {
+                            out.println("Sem jogadores cadastrados");
+                            break;
+                        }
+
+                        if (timeDAO.getTimes().isEmpty()) {
+                            out.println("Sem time cadastrados");
+                            break;
+                        }
+
+
+                        Time t = timeDAO.encontrarPorNome(campos[1]);
+                        if (t != null) {
+                            Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
+                            if (j != null) {
+                                t.addPessoa(j);
+                                out.println("Jogador inserido no time com sucesso");
+                            } else {
+                                out.println("Jogador não encontrado");
+                            }
+                        } else {
+                            out.println("Time não encontrado");
+                        }
+                        break;
+                    }
+                    case "DELETE_JOGADOR_TIME": {
+                        if (jogadorDAO.getJogadores().isEmpty()) {
+                            out.println("Sem jogadores cadastrados");
+                            break;
+                        }
+
+                        if (timeDAO.getTimes().isEmpty()) {
+                            out.println("Sem times cadastrados");
+                            break;
+                        }
+
+                        Time t = timeDAO.encontrarPorNome(campos[1]);
+                        if (t != null) {
+                            Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
+                            if (j != null) {
+                                t.removePessoa(j);
+                                out.println("Jogador removido do time com sucesso");
+                            } else {
+                                out.println("Jogador não encontrado");
+                            }
+                        } else {
+                            out.println("Time não encontrado");
+                        }
+
+                        break;
+                    }
+                    case "INSERT_TECNICO_TIME": {
+                        if (tecnicoDAO.getTecnicos().isEmpty()) {
+                            out.println("Sem tecnicos cadastrados");
+                            break;
+                        }
+
+                        if (timeDAO.getTimes().isEmpty()) {
+                            out.println("Sem time cadastrados");
+                            break;
+                        }
+
+
+                        Time t = timeDAO.encontrarPorNome(campos[1]);
+                        if (t != null) {
+                            Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
+                            if (tec != null) {
+                                t.addPessoa(tec);
+                                out.println("Tecnico inserido no time com sucesso");
+                            } else {
+                                out.println("Tecnico não encontrado");
+                            }
+                        } else {
+                            out.println("Time não encontrado");
+                        }
+                        break;
+                    }
+                    case "DELETE_TECNICO_TIME": {
+                        if (tecnicoDAO.getTecnicos().isEmpty()) {
+                            out.println("Sem tecnicos cadastrados");
+                            break;
+                        }
+
+                        if (timeDAO.getTimes().isEmpty()) {
+                            out.println("Sem times cadastrados");
+                            break;
+                        }
+
+                        Time t = timeDAO.encontrarPorNome(campos[1]);
+                        if (t != null) {
+                            Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
+                            if (tec != null) {
+                                t.removePessoa(tec);
+                                out.println("Tecnico removido do time com sucesso");
+                            } else {
+                                out.println("Tecnico não encontrado");
+                            }
+                        } else {
+                            out.println("Time não encontrado");
+                        }
+
                         break;
                     }
                     default:
@@ -104,14 +317,5 @@ public class Servidor {
 
             }
         }
-    }
-
-    public static Pessoa encontrarPessoaPorCpf(List<Pessoa> pessoas, String cpf) {
-        for (Pessoa p : pessoas) {
-            if (p.getCpf().equalsIgnoreCase(cpf)) {
-                return p;
-            }
-        }
-        return null; 
     }
 }
