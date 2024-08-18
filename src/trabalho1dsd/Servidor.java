@@ -41,8 +41,13 @@ public class Servidor {
 
                 switch (campos[0]) {
                     case "INSERT_JOGADOR": {
-                        Jogador j = new Jogador(campos[1], campos[2], campos[3], campos[4], campos[5], Integer.parseInt(campos[6]), null);
-                        jogadorDAO.salvar(j);
+                        if (jogadorDAO.encontrarPorCpf(campos[1]) == null) {
+                            Jogador j = new Jogador(campos[1], campos[2], campos[3], campos[4], campos[5], Integer.parseInt(campos[6]), null);
+                            jogadorDAO.salvar(j);
+                            out.println("Jogador cadastrado com sucesso");
+                        } else {
+                            out.println("Já existe uma pessoa com este cpf cadastrado");
+                        }
                         break;
                     }
                     case "UPDATE_JOGADOR": {
@@ -99,8 +104,13 @@ public class Servidor {
                         break;
                     }
                     case "INSERT_TECNICO": {
-                        Tecnico t = new Tecnico(campos[1], campos[2], campos[3], campos[4], campos[5], null);
-                        tecnicoDAO.salvar(t);
+                        if(tecnicoDAO.encontrarPorCpf(campos[1]) == null){
+                            Tecnico t = new Tecnico(campos[1], campos[2], campos[3], campos[4], campos[5], null);
+                            tecnicoDAO.salvar(t);
+                            out.println("Tecnico cadastrado com sucesso");
+                        } else {
+                            out.println("Já foi cadastrado uma pessoa com este cpf");
+                        }
                         break;
                     }
                     case "UPDATE_TECNICO": {
@@ -155,8 +165,13 @@ public class Servidor {
                         break;
                     }
                     case "INSERT_TIME": {
-                        Time t = new Time(campos[1], campos[2], campos[3], Integer.parseInt(campos[4]));
-                        timeDAO.salvar(t);
+                        if(timeDAO.encontrarPorNome(campos[1]) == null) {
+                            Time t = new Time(campos[1], campos[2], campos[3], Integer.parseInt(campos[4]));
+                            timeDAO.salvar(t);
+                            out.println("Time cadastrado com sucesso");
+                        } else {
+                            out.println("Já existe um time com este nome cadastrado");
+                        }
                         break;
                     }
 
