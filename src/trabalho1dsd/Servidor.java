@@ -215,6 +215,15 @@ public class Servidor {
                         break;
                     }
                     case "LIST_TIME": {
+//                        if (timeDAO.getTimes().isEmpty()) {
+//                            out.println(0);
+//                            break;
+//                        }
+//                        out.println(timeDAO.getTimes().size());
+//                        for (Time t : timeDAO.getTimes()) {
+//                            out.println(t.toString());
+//                        }
+//                        break;
                         if (timeDAO.getTimes().isEmpty()) {
                             out.println(0);
                             break;
@@ -222,6 +231,14 @@ public class Servidor {
                         out.println(timeDAO.getTimes().size());
                         for (Time t : timeDAO.getTimes()) {
                             out.println(t.toString());
+                            for (Tecnico tec : tecnicoDAO.getTecnicos()) {
+                                if (t.equals(tec.getTime()))
+                                    out.println(tec.toString());
+                            }
+                            for (Jogador j : jogadorDAO.getJogadores()) {
+                                if (t.equals(j.getTime()))
+                                    out.println(j.toString());
+                            }
                         }
                         break;
                     }
@@ -236,12 +253,13 @@ public class Servidor {
                             break;
                         }
 
-
                         Time t = timeDAO.encontrarPorNome(campos[1]);
+                        
                         if (t != null) {
                             Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
                             if (j != null) {
-                                t.addPessoa(j);
+//                                t.addPessoa(j);
+                                j.setTime(t);
                                 out.println("Jogador inserido no time com sucesso");
                             } else {
                                 out.println("Jogador não encontrado");
@@ -266,7 +284,8 @@ public class Servidor {
                         if (t != null) {
                             Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
                             if (j != null) {
-                                t.removePessoa(j);
+//                                t.removePessoa(j);
+                                j.setTime(null);
                                 out.println("Jogador removido do time com sucesso");
                             } else {
                                 out.println("Jogador não encontrado");
@@ -293,7 +312,8 @@ public class Servidor {
                         if (t != null) {
                             Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
                             if (tec != null) {
-                                t.addPessoa(tec);
+//                                t.addPessoa(tec);
+                                tec.setTime(t);
                                 out.println("Tecnico inserido no time com sucesso");
                             } else {
                                 out.println("Tecnico não encontrado");
@@ -318,7 +338,8 @@ public class Servidor {
                         if (t != null) {
                             Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
                             if (tec != null) {
-                                t.removePessoa(tec);
+//                                t.removePessoa(tec);
+                                tec.setTime(null);
                                 out.println("Tecnico removido do time com sucesso");
                             } else {
                                 out.println("Tecnico não encontrado");

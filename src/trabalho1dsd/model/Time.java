@@ -15,7 +15,7 @@ public class Time {
     private String endereco;
     private String pais;
     private int anoFundacao;
-    private List<Pessoa> pessoas = new ArrayList<Pessoa>();
+//    private List<Pessoa> pessoas = new ArrayList<Pessoa>();
 
     public Time(String nome, String endereco, String pais, int anoFundacao) {
         this.nome = nome;
@@ -56,31 +56,31 @@ public class Time {
         this.anoFundacao = anoFundacao;
     }
 
-    public List<Pessoa> getPessoas() {
-        return pessoas;
-    }
-
-    public void addPessoa(Pessoa pessoa) {
-        this.pessoas.add(pessoa);
-        pessoa.setTime(this);
-    }
-
-    public void removePessoa(Pessoa pessoa) {
-        this.pessoas.remove(pessoa);
-        pessoa.setTime(null);
-    }
-
-    public Pessoa findPessoaByName(String name) {
-        for (Pessoa p : pessoas) {
-            if (p.getNome().equalsIgnoreCase(name)) {
-                return p;
-            }
-        }
-        return null;
-    }
+//    public List<Pessoa> getPessoas() {
+//        return pessoas;
+//    }
+//
+//    public void addPessoa(Pessoa pessoa) {
+//        this.pessoas.add(pessoa);
+//        pessoa.setTime(this);
+//    }
+//
+//    public void removePessoa(Pessoa pessoa) {
+//        this.pessoas.remove(pessoa);
+//        pessoa.setTime(null);
+//    }
+//
+//    public Pessoa findPessoaByName(String name) {
+//        for (Pessoa p : pessoas) {
+//            if (p.getNome().equalsIgnoreCase(name)) {
+//                return p;
+//            }
+//        }
+//        return null;
+//    }
 
     @Override
     public String toString() {
-        return this.getNome() + ";" + this.getEndereco() + ";" + this.getPais() + ";" + this.getAnoFundacao() + ";[" + this.getPessoas().toString() + "]";
+        return this.getNome() + ";" + this.getEndereco() + ";" + this.getPais() + ";" + this.getAnoFundacao();
     }
 }
