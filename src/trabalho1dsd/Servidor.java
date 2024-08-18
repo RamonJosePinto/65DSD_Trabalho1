@@ -231,15 +231,21 @@ public class Servidor {
                         out.println(timeDAO.getTimes().size());
                         for (Time t : timeDAO.getTimes()) {
                             out.println(t.toString());
+                            
                             for (Tecnico tec : tecnicoDAO.getTecnicos()) {
-                                if (tec.getTime() != null)
-                                    if (t.getNome().equals(tec.getTime().getNome()))
+                                if (tec.getTime() != null) {
+                                    if (t.getNome().equals(tec.getTime().getNome())) {
                                         out.println(tec.toString());
+                                    }
+                                }
                             }
+                            
                             for (Jogador j : jogadorDAO.getJogadores()) {
-                                if (j.getTime() != null)
-                                    if (t.getNome().equals(j.getTime().getNome()))
+                                if (j.getTime() != null) {
+                                    if (t.getNome().equals(j.getTime().getNome())) {
                                         out.println(j.toString());
+                                    }
+                                }
                             }
                         }
                         break;
