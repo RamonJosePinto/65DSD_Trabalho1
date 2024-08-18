@@ -67,6 +67,7 @@ public class Time {
 
     public void removePessoa(Pessoa pessoa) {
         this.pessoas.remove(pessoa);
+        pessoa.setTime(null);
     }
 
     public Pessoa findPessoaByName(String name) {
