@@ -5,6 +5,7 @@
 package trabalho1dsd;
 
 
+
 import trabalho1dsd.dao.*;
 import trabalho1dsd.model.Jogador;
 import trabalho1dsd.model.Tecnico;
@@ -35,6 +36,7 @@ public class Servidor {
                 PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
 
                 String mensagemRecebida = in.readLine();
+                System.out.println(mensagemRecebida);
                 String[] campos = mensagemRecebida.split(";");
 
                 switch (campos[0]) {
@@ -85,6 +87,7 @@ public class Servidor {
                         break;
                     }
                     case "LIST_JOGADOR": {
+                        System.out.println(jogadorDAO.getJogadores().size());
                         if (jogadorDAO.getJogadores().isEmpty()) {
                             out.println(0);
                             break;

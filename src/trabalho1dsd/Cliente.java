@@ -18,62 +18,73 @@ public class Cliente {
      */
     public static void main(String[] args) throws IOException {
         Scanner s = new Scanner(System.in);
-        int opc = 0;
-        while (opc != 13) {
+
+        while (true) {
             System.out.println("" +
-                    " 1 - Cadastrar pessoa        | 2 - Alterar pessoa " +
-                    "\n 3 - Recuperar pessoa        | 4 - Excluir pessoa " +
-                    "\n 5 - Listar pessoas          | 6 - Cadastrar time " +
-                    "\n 7 - Alterar time            | 8 - Recupera time " +
-                    "\n 9 - Excluir time            | 10 - Listar times  " +
-                    "\n 11 - Inserir pessoa em time | 12 - Excluir pessoa do time " +
-                    "\n 13 - Terminar");
-            opc = s.nextInt();
+                    " 1 - Cadastrar jogador   | 2 - Alterar jogador " +
+                    "\n 3 - Recuperar jogador | 4 - Excluir jogador " +
+                    "\n 5 - Listar jogador    | 6 - Cadastrar tecnico " +
+                    "\n 7 - Alterar tecnico   | 8 - Recupera tecnico " +
+                    "\n 9 - Excluir tecnico   | 10 - Listar tecnico  " +
+                    "\n 11 - Cadastrar time   | 12 - Alterar time " +
+                    "\n 13 - Recuperar time   | 14 - Excluir time " +
+                    "\n 15 - Listar time      | 16 - Inserir jogador no time " +
+                    "\n 17 - Inserir Tecnico no time");
+            int opc = s.nextInt();
 
             switch (opc) {
                 //1 - cadastrar pessoa
                 case 1: {
-                    System.out.println("* Cadastrar pessoa *");
+                    System.out.println("* Cadastrar jogador *");
 
-                    try (Socket conn = createSocketConnection()) {
+                    System.out.println("Informe o cpf");
+                    String cpf = s.next();
+                    System.out.println("Informe o nome");
+                    s.nextLine();
+                    String nome = s.nextLine();
+                    System.out.println("Informe o endereço");
+                    String endereco = s.nextLine();
+                    System.out.println("Posição do Jogador:");
+                    String posicao = s.nextLine();
+                    System.out.println("Nacionalidade do Jogador:");
+                    String nacionalidade = s.nextLine();
+                    System.out.println("Número do Jogador:");
+                    int numero = s.nextInt();
 
-                        OutputStream out = conn.getOutputStream();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-                        System.out.println("Informe o cpf");
-                        String cpf = s.next();
-                        System.out.println("Informe o nome");
-                        s.nextLine();
-                        String nome = s.nextLine();
-                        System.out.println("Informe o endereço");
-                        String endereco = s.nextLine();
-
-                        String mensagem = "INSERT;" + cpf + ";" + nome + ";" + endereco;
-                        out.write(mensagem.getBytes());
+                        out.println("INSERT_JOGADOR;" + cpf + ";" + nome + ";" + endereco + ";" + posicao + ";" + nacionalidade + ";" + numero);
 
                         conn.close();
                     }
+
                     break;
                 }
                 //2 - alterar pessoa
                 case 2: {
-                    System.out.println("* Alterar pessoa *");
+                    System.out.println("* Alterar jogador *");
 
-                    try (Socket conn = createSocketConnection()) {
+                    System.out.println("Informe o cpf do jogador a ser alterado");
+                    String cpf = s.next();
+                    System.out.println("Informe o nome");
+                    s.nextLine();
+                    String nome = s.nextLine();
+                    System.out.println("Informe o endereço");
+                    String endereco = s.nextLine();
+                    System.out.println("Posição do Jogador:");
+                    String posicao = s.nextLine();
+                    System.out.println("Nacionalidade do Jogador:");
+                    String nacionalidade = s.nextLine();
+                    System.out.println("Número do Jogador:");
+                    int numero = s.nextInt();
 
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
-                        System.out.println("Informe o cpf da pessoa a ser alterada");
-                        String cpf = s.next();
-                        System.out.println("Informe o nome");
-
-                        s.nextLine();
-                        String nome = s.nextLine();
-                        System.out.println("Informe o endereço");
-                        String endereco = s.nextLine();
-
-                        String mensagem = "UPDATE;" + cpf + ";" + nome + ";" + endereco;
-                        out.println(mensagem);
+                        out.println("UPDATE_JOGADOR;" + cpf + ";" + nome + ";" + endereco + ";" + posicao + ";" + nacionalidade + ";" + numero);
 
                         String resposta = in.readLine();
                         if (resposta != null) {
@@ -85,18 +96,15 @@ public class Cliente {
                 }
                 //3 - recuperar pessoa
                 case 3: {
-                    System.out.println("* Recuperar pessoa *");
+                    System.out.println("* Recuperar jogador *");
 
-                    try (Socket conn = createSocketConnection()) {
+                    System.out.println("Informe o cpf do jogador a ser encontrado");
+                    String cpf = s.next();
 
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                        System.out.println("Informe o cpf da pessoa a ser encontrada");
-                        String cpf = s.next();
-
-                        String mensagem = "GET;" + cpf;
-                        out.println(mensagem);
+                        out.println("GET_JOGADOR;" + cpf);
 
                         String resposta = in.readLine();
                         if (resposta != null) {
@@ -110,16 +118,13 @@ public class Cliente {
                 case 4: {
                     System.out.println("* Excluir pessoa *");
 
-                    try (Socket conn = createSocketConnection()) {
+                    System.out.println("Informe o cpf do jogador a ser removido");
+                    String cpf = s.next();
 
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                        System.out.println("Informe o cpf da pessoa a ser removida");
-                        String cpf = s.next();
-
-                        String mensagem = "DELETE;" + cpf;
-                        out.println(mensagem);
+                        out.println("DELETE_JOGADOR;" + cpf);
 
                         String resposta = in.readLine();
                         if (resposta != null) {
@@ -133,13 +138,10 @@ public class Cliente {
                 case 5: {
                     System.out.println("* Listar pessoas *");
 
-                    try (Socket conn = createSocketConnection()) {
-
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                        String mensagem = "LIST";
-                        out.println(mensagem);
+                        out.println("LIST_JOGADOR");
 
                         String resposta = in.readLine();
                         if (resposta != null && !resposta.equals("0")) {
@@ -150,36 +152,150 @@ public class Cliente {
                                 System.out.println(pessoa);
                             }
                         } else {
-                            System.out.println("Nenhuma pessoa cadastrada.");
+                            System.out.println("Nenhum jogador cadastrado");
+                        }
+                        conn.close();
+                    }
+                    break;
+                }
+                case 6: {
+                    System.out.println("* Cadastrar tecnico *");
+
+                    System.out.println("Informe o cpf");
+                    String cpf = s.next();
+                    System.out.println("Informe o nome");
+                    s.nextLine();
+                    String nome = s.nextLine();
+                    System.out.println("Informe o endereço");
+                    String endereco = s.nextLine();
+                    System.out.println("Informe o inicio da vigencia:");
+                    String vigenciaInicio = s.nextLine();
+                    System.out.println("Informe o fim da vigencia:");
+                    String vigenciaFim = s.nextLine();
+
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        out.println("INSERT_TECNICO;" + cpf + ";" + nome + ";" + endereco + ";" + vigenciaInicio + ";" + vigenciaFim);
+
+                        conn.close();
+                    }
+                    break;
+
+                }
+                //2 - alterar pessoa
+                case 7: {
+                    System.out.println("* Alterar tecnico *");
+
+                    System.out.println("Informe o cpf do tecnico a ser alterado");
+                    String cpf = s.next();
+                    System.out.println("Informe o nome");
+                    s.nextLine();
+                    String nome = s.nextLine();
+                    System.out.println("Informe o endereço");
+                    String endereco = s.nextLine();
+                    System.out.println("Informe o inicio da vigencia:");
+                    String vigenciaInicio = s.nextLine();
+                    System.out.println("Informe o fim da vigencia:");
+                    String vigenciaFim = s.nextLine();
+
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        out.println("UPDATE_TECNICO;" + cpf + ";" + nome + ";" + endereco + ";" + vigenciaInicio + ";" + vigenciaFim);
+
+                        String resposta = in.readLine();
+                        if (resposta != null) {
+                            System.out.println(resposta);
+                        }
+                        conn.close();
+                    }
+                    break;
+                }
+                //3 - recuperar pessoa
+                case 8: {
+                    System.out.println("* Recuperar tecnico *");
+
+                    System.out.println("Informe o cpf do jogador a ser encontrado");
+                    String cpf = s.next();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        out.println("GET_TECNICO;" + cpf);
+
+                        String resposta = in.readLine();
+                        if (resposta != null) {
+                            System.out.println(resposta);
+                        }
+                        conn.close();
+                    }
+                    break;
+                }
+                //4 - excluir pessoa
+                case 9: {
+                    System.out.println("* Excluir tecnico *");
+
+                    System.out.println("Informe o cpf do tecnico a ser removido");
+                    String cpf = s.next();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        out.println("DELETE_TECNICO;" + cpf);
+
+                        String resposta = in.readLine();
+                        if (resposta != null) {
+                            System.out.println(resposta);
+                        }
+                        conn.close();
+                    }
+                    break;
+                }
+                //5 - listar pessoas
+                case 10: {
+                    System.out.println("* Listar pessoas *");
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        out.println("LIST_TECNICO");
+
+                        String resposta = in.readLine();
+                        if (resposta != null && !resposta.equals("0")) {
+                            int numPessoas = Integer.parseInt(resposta);
+                            System.out.println(numPessoas);
+                            for (int i = 0; i < numPessoas; i++) {
+                                String pessoa = in.readLine();
+                                System.out.println(pessoa);
+                            }
+                        } else {
+                            System.out.println("Nenhum tecnico cadastrado");
                         }
                         conn.close();
                     }
                     break;
                 }
                 //6 - cadastrar time
-                case 6: {
+                case 11: {
                     System.out.println("* Cadastrar time *");
 
-                    try (Socket conn = createSocketConnection()) {
+                    System.out.println("Informe o nome do time");
+                    s.nextLine();
+                    String nome = s.nextLine();
 
+                    System.out.println("Informe o endereço do time");
+
+                    String endereco = s.nextLine();
+
+                    System.out.println("Informe o país do time");
+
+                    String pais = s.nextLine();
+
+                    System.out.println("Informe o ano de fundação do time");
+
+                    int ano = s.nextInt();
+
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
-
-                        System.out.println("Informe o nome do time");
-                        s.nextLine();
-                        String nome = s.nextLine();
-
-                        System.out.println("Informe o endereço do time");
-
-                        String endereco = s.nextLine();
-
-                        System.out.println("Informe o país do time");
-
-                        String pais = s.nextLine();
-
-                        System.out.println("Informe o ano de fundação do time");
-
-                        int ano = s.nextInt();
-
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
                         String mensagem = "INSERT_TIME;" + nome + ";" + endereco + ";" + pais + ";" + ano;
                         out.println(mensagem);
 
@@ -188,30 +304,26 @@ public class Cliente {
                     break;
                 }
                 //7 - alterar time
-                case 7: {
+                case 12: {
                     System.out.println("* Alterar time *");
+                    System.out.println("Informe o nome do time");
+                    s.nextLine();
+                    String nome = s.nextLine();
 
-                    try (Socket conn = createSocketConnection()) {
+                    System.out.println("Informe o endereço do time");
 
+                    String endereco = s.nextLine();
+
+                    System.out.println("Informe o país do time");
+
+                    String pais = s.nextLine();
+
+                    System.out.println("Informe o ano de fundação do time");
+
+                    int ano = s.nextInt();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                        System.out.println("Informe o nome do time");
-                        s.nextLine();
-                        String nome = s.nextLine();
-
-                        System.out.println("Informe o endereço do time");
-
-                        String endereco = s.nextLine();
-
-                        System.out.println("Informe o país do time");
-
-                        String pais = s.nextLine();
-
-                        System.out.println("Informe o ano de fundação do time");
-
-                        int ano = s.nextInt();
-
                         String mensagem = "UPDATE_TIME;" + nome + ";" + endereco + ";" + pais + ";" + ano;
                         out.println(mensagem);
 
@@ -224,18 +336,15 @@ public class Cliente {
                     break;
                 }
                 //8 - recuperar time
-                case 8: {
+                case 13: {
                     System.out.println("* Recuperar time *");
 
-                    try (Socket conn = createSocketConnection()) {
-
+                    System.out.println("Informe o nome do time");
+                    s.nextLine();
+                    String nome = s.nextLine();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                        System.out.println("Informe o nome do time");
-                        s.nextLine();
-                        String nome = s.nextLine();
-
                         String mensagem = "GET_TIME;" + nome;
                         out.println(mensagem);
 
@@ -248,18 +357,15 @@ public class Cliente {
                     break;
                 }
                 //9 - excluir time
-                case 9: {
+                case 14: {
                     System.out.println("* Excluir time *");
 
-                    try (Socket conn = createSocketConnection()) {
-
+                    System.out.println("Informe o nome do time");
+                    s.nextLine();
+                    String nome = s.nextLine();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
-                        System.out.println("Informe o nome do time");
-                        s.nextLine();
-                        String nome = s.nextLine();
-
                         String mensagem = "DELETE_TIME;" + nome;
                         out.println(mensagem);
 
@@ -272,14 +378,11 @@ public class Cliente {
                     break;
                 }
                 //10 - listar times
-                case 10: {
+                case 15: {
                     System.out.println("* Listar times *");
-
-                    try (Socket conn = createSocketConnection()) {
-
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-
                         String mensagem = "LIST_TIME";
                         out.println(mensagem);
 
@@ -298,22 +401,21 @@ public class Cliente {
                     }
                     break;
                 }
-                case 11: {
+                case 16: {
                     // Inserir pessoa time
-                    System.out.println("* Inserir pessoa em time *");
+                    System.out.println("* Inserir jogador em time *");
 
-                    try (Socket conn = createSocketConnection()) {
 
+                    s.nextLine();
+                    System.out.println("Informe o nome do time para inserir um jogador");
+                    String nome = s.nextLine();
+
+                    System.out.println("Informe o cpf do jogador a ser inserido no time");
+                    String cpf = s.next();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                        s.nextLine();
-                        System.out.println("Informe o nome do time para inserir uma pessoa");
-                        String nome = s.nextLine();
-
-                        System.out.println("Informe o cpf da pessoa a ser inserida no time");
-                        String cpf = s.next();
-
-                        String mensagem = "INSERT_PESSOA_TIME;" + nome + ";" + cpf;
+                        String mensagem = "INSERT_JOGADOR_TIME;" + nome + ";" + cpf;
                         out.println(mensagem);
 
                         String resposta = in.readLine();
@@ -324,22 +426,69 @@ public class Cliente {
                     }
                     break;
                 }
-                case 12: {
+                case 17: {
                     // Excluir pessoa time
-                    System.out.println("* Excluir pessoa em time *");
+                    System.out.println("* Excluir jogador do time *");
 
-                    try (Socket conn = createSocketConnection()) {
+                    s.nextLine();
+                    System.out.println("Informe o nome do time para retirar um jogador");
+                    String nome = s.nextLine();
 
+                    System.out.println("Informe o cpf do jogador a ser retirado do time");
+                    String cpf = s.next();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
                         PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
                         BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-                        s.nextLine();
-                        System.out.println("Informe o nome do time para retirar uma pessoa");
-                        String nome = s.nextLine();
+                        String mensagem = "DELETE_JOGADOR_TIME;" + nome + ";" + cpf;
+                        out.println(mensagem);
 
-                        System.out.println("Informe o cpf da pessoa a ser retirada do time");
-                        String cpf = s.next();
+                        String resposta = in.readLine();
+                        if (resposta != null) {
+                            System.out.println(resposta);
+                        }
+                        conn.close();
+                    }
+                    break;
+                }
+                case 18: {
+                    // Inserir pessoa time
+                    System.out.println("* Inserir tecnico em time *");
 
-                        String mensagem = "DELETE_PESSOA_TIME;" + nome + ";" + cpf;
+
+                    s.nextLine();
+                    System.out.println("Informe o nome do time para inserir um tecnico");
+                    String nome = s.nextLine();
+
+                    System.out.println("Informe o cpf do jogador a ser inserido no time");
+                    String cpf = s.next();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String mensagem = "INSERT_TECNICO_TIME;" + nome + ";" + cpf;
+                        out.println(mensagem);
+
+                        String resposta = in.readLine();
+                        if (resposta != null) {
+                            System.out.println(resposta);
+                        }
+                        conn.close();
+                    }
+                    break;
+                }
+                case 19: {
+                    // Excluir pessoa time
+                    System.out.println("* Excluir tecnico do time *");
+
+                    s.nextLine();
+                    System.out.println("Informe o nome do time para retirar um tecnico");
+                    String nome = s.nextLine();
+
+                    System.out.println("Informe o cpf do tecnico a ser retirado do time");
+                    String cpf = s.next();
+                    try (Socket conn = new Socket("10.15.120.171", 80);) {
+                        PrintWriter out = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()), true);
+                        BufferedReader in = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+                        String mensagem = "DELETE_TECNICO_TIME;" + nome + ";" + cpf;
                         out.println(mensagem);
 
                         String resposta = in.readLine();
@@ -351,9 +500,9 @@ public class Cliente {
                     break;
                 }
                 //12 - terminar
-                case 13: {
+                case 20: {
                     System.out.println("* Terminar *");
-                    break;
+                    return;
                 }
                 default: {
                     throw new AssertionError();
@@ -361,8 +510,5 @@ public class Cliente {
             }
         }
     }
-
-    private static Socket createSocketConnection() throws IOException {
-        return new Socket("10.15.120.53", 80);
-    }
 }
+
