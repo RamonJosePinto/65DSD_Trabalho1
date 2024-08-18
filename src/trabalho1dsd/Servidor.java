@@ -229,13 +229,16 @@ public class Servidor {
                             break;
                         }
                         out.println(timeDAO.getTimes().size());
+                        
+                        String retorno = "";
+                        
                         for (Time t : timeDAO.getTimes()) {
-                            out.println(t.toString());
+                            retorno += t.toString();
                             
                             for (Tecnico tec : tecnicoDAO.getTecnicos()) {
                                 if (tec.getTime() != null) {
                                     if (t.getNome().equals(tec.getTime().getNome())) {
-                                        out.println(tec.toString());
+                                        retorno += " - " + tec.toString();
                                     }
                                 }
                             }
@@ -243,11 +246,15 @@ public class Servidor {
                             for (Jogador j : jogadorDAO.getJogadores()) {
                                 if (j.getTime() != null) {
                                     if (t.getNome().equals(j.getTime().getNome())) {
-                                        out.println(j.toString());
+                                        retorno += " - " + j.toString();
                                     }
                                 }
                             }
+                            
+                            retorno += "\n";
                         }
+                        
+                        out.println(retorno);
                         break;
                     }
                     case "INSERT_JOGADOR_TIME": {
