@@ -288,7 +288,6 @@ public class Servidor {
                             break;
                         }
 
-
                         Time t = timeDAO.encontrarPorNome(campos[1]);
                         if (t != null) {
                             Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
