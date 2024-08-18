@@ -31,7 +31,6 @@ public class Cliente {
             int opc = s.nextInt();
 
             switch (opc) {
-                //1 - cadastrar pessoa
                 case 1: {
                     System.out.println("* Cadastrar jogador *");
 
@@ -60,7 +59,6 @@ public class Cliente {
 
                     break;
                 }
-                //2 - alterar pessoa
                 case 2: {
                     System.out.println("* Alterar jogador *");
 
@@ -92,7 +90,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //3 - recuperar pessoa
                 case 3: {
                     System.out.println("* Recuperar jogador *");
 
@@ -112,7 +109,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //4 - excluir pessoa
                 case 4: {
                     System.out.println("* Excluir pessoa *");
 
@@ -132,7 +128,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //5 - listar pessoas
                 case 5: {
                     System.out.println("* Listar pessoas *");
 
@@ -181,7 +176,6 @@ public class Cliente {
                     break;
 
                 }
-                //2 - alterar pessoa
                 case 7: {
                     System.out.println("* Alterar tecnico *");
 
@@ -210,7 +204,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //3 - recuperar pessoa
                 case 8: {
                     System.out.println("* Recuperar tecnico *");
 
@@ -229,7 +222,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //4 - excluir pessoa
                 case 9: {
                     System.out.println("* Excluir tecnico *");
 
@@ -248,7 +240,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //5 - listar pessoas
                 case 10: {
                     System.out.println("* Listar pessoas *");
                     try (Socket conn = new Socket("10.15.120.171", 80);) {
@@ -271,7 +262,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //6 - cadastrar time
                 case 11: {
                     System.out.println("* Cadastrar time *");
 
@@ -301,7 +291,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //7 - alterar time
                 case 12: {
                     System.out.println("* Alterar time *");
                     System.out.println("Informe o nome do time");
@@ -333,7 +322,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //8 - recuperar time
                 case 13: {
                     System.out.println("* Recuperar time *");
 
@@ -354,7 +342,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //9 - excluir time
                 case 14: {
                     System.out.println("* Excluir time *");
 
@@ -375,7 +362,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //10 - listar times
                 case 15: {
                     System.out.println("* Listar times *");
                     try (Socket conn = new Socket("10.15.120.171", 80);) {
@@ -400,7 +386,6 @@ public class Cliente {
                     break;
                 }
                 case 16: {
-                    // Inserir pessoa time
                     System.out.println("* Inserir jogador em time *");
 
 
@@ -425,7 +410,6 @@ public class Cliente {
                     break;
                 }
                 case 17: {
-                    // Excluir pessoa time
                     System.out.println("* Excluir jogador do time *");
 
                     s.nextLine();
@@ -449,7 +433,6 @@ public class Cliente {
                     break;
                 }
                 case 18: {
-                    // Inserir pessoa time
                     System.out.println("* Inserir tecnico em time *");
 
 
@@ -474,7 +457,6 @@ public class Cliente {
                     break;
                 }
                 case 19: {
-                    // Excluir pessoa time
                     System.out.println("* Excluir tecnico do time *");
 
                     s.nextLine();
@@ -497,7 +479,6 @@ public class Cliente {
                     }
                     break;
                 }
-                //12 - terminar
                 case 20: {
                     System.out.println("* Terminar *");
                     return;
