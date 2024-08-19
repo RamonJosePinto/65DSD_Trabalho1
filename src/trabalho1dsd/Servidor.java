@@ -244,7 +244,7 @@ public class Servidor {
                                     
                                     if (nomeTime.equals(timeTecnico)) {
                                         System.out.println("É igual");
-                                        retorno += " TECNICO: " + tec.toString();
+                                        retorno += " -- TECNICO: " + tec.toString();
                                         System.out.println(retorno);
                                     } else {
                                         System.out.println("Não é igual");
@@ -261,7 +261,7 @@ public class Servidor {
                                     
                                     if (nomeTime.equalsIgnoreCase(timeJogador)) {
                                         System.out.println("É igual");
-                                        retorno += " JOGADOR: " + j.toString();
+                                        retorno += " -- JOGADOR: " + j.toString();
                                         System.out.println(retorno);
                                     } else {
                                         System.out.println("Não é igual");
