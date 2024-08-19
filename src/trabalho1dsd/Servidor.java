@@ -243,7 +243,7 @@ public class Servidor {
                                     System.out.println("["+nomeTime+"]");
                                     System.out.println("["+timeTecnico+"]");
                                     
-                                    if (nomeTime.equals(timeTecnico)) {
+                                    if (nomeTime.equalsIgnoreCase(timeTecnico)) {
                                         retorno += "\n - " + tec.toString();
                                     }
                                 }
@@ -258,7 +258,7 @@ public class Servidor {
                                     System.out.println("["+nomeTime+"]");
                                     System.out.println("["+timeJogador+"]");
                                     
-                                    if (nomeTime.equals(timeJogador)) {
+                                    if (nomeTime.equalsIgnoreCase(timeJogador)) {
                                         retorno += "\n - " + j.toString();
                                     }
                                 }
