@@ -240,31 +240,22 @@ public class Servidor {
                                     String nomeTime = time.getNome();
                                     String timeTecnico = tec.getTime().getNome();
                                     
-                                    System.out.println("["+nomeTime+"]");
-                                    System.out.println("["+timeTecnico+"]");
-                                    
-                                    if (nomeTime.equalsIgnoreCase(timeTecnico)) {
-                                        retorno += "\n - " + tec.toString();
+                                    if (nomeTime.equals(timeTecnico)) {
+                                        retorno += " TECNICO: " + tec.toString();
                                     }
                                 }
                             }
                             
                             for (Jogador j : jogadorDAO.getJogadores()) {
-                                System.out.println("Olhou o jogador " + j.toString());
                                 if (j.getTime() != null) {
                                     String nomeTime = time.getNome();
                                     String timeJogador = j.getTime().getNome();
                                     
-                                    System.out.println("["+nomeTime+"]");
-                                    System.out.println("["+timeJogador+"]");
-                                    
                                     if (nomeTime.equalsIgnoreCase(timeJogador)) {
-                                        retorno += "\n - " + j.toString();
+                                        retorno += " JOGADOR: " + j.toString();
                                     }
                                 }
                             }
-                            
-                            retorno += "\n";
                         }
                         
                         out.println(retorno);
