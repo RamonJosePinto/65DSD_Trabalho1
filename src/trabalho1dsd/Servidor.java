@@ -366,7 +366,7 @@ public class Servidor {
                         break;
                     }
                     default:
-                        throw new AssertionError();
+                        out.println("Opção indisponível.");
                 }
 
             }
