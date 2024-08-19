@@ -232,20 +232,21 @@ public class Servidor {
                         
                         String retorno = "";
                         
-                        for (Time t : timeDAO.getTimes()) {
-                            retorno += t.toString();
+                        for (Time time : timeDAO.getTimes()) {
+                            retorno += time.toString();
                             
                             for (Tecnico tec : tecnicoDAO.getTecnicos()) {
                                 if (tec.getTime() != null) {
-                                    if (t.getNome().equals(tec.getTime().getNome())) {
+                                    if (time.getNome().equals(tec.getTime().getNome())) {
                                         retorno += "\n - " + tec.toString();
                                     }
                                 }
                             }
                             
                             for (Jogador j : jogadorDAO.getJogadores()) {
+                                System.out.println("Olhou o jogador " + j.toString());
                                 if (j.getTime() != null) {
-                                    if (t.getNome().equals(j.getTime().getNome())) {
+                                    if (time.getNome().equals(j.getTime().getNome())) {
                                         retorno += "\n - " + j.toString();
                                     }
                                 }
