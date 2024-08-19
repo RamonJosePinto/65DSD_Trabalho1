@@ -237,7 +237,13 @@ public class Servidor {
                             
                             for (Tecnico tec : tecnicoDAO.getTecnicos()) {
                                 if (tec.getTime() != null) {
-                                    if (time.getNome().equals(tec.getTime().getNome())) {
+                                    String nomeTime = time.getNome();
+                                    String timeTecnico = tec.getTime().getNome();
+                                    
+                                    System.out.println("["+nomeTime+"]");
+                                    System.out.println("["+timeTecnico+"]");
+                                    
+                                    if (nomeTime.equals(timeTecnico)) {
                                         retorno += "\n - " + tec.toString();
                                     }
                                 }
@@ -246,7 +252,13 @@ public class Servidor {
                             for (Jogador j : jogadorDAO.getJogadores()) {
                                 System.out.println("Olhou o jogador " + j.toString());
                                 if (j.getTime() != null) {
-                                    if (time.getNome().equals(j.getTime().getNome())) {
+                                    String nomeTime = time.getNome();
+                                    String timeJogador = j.getTime().getNome();
+                                    
+                                    System.out.println("["+nomeTime+"]");
+                                    System.out.println("["+timeJogador+"]");
+                                    
+                                    if (nomeTime.equals(timeJogador)) {
                                         retorno += "\n - " + j.toString();
                                     }
                                 }
