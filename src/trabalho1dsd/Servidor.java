@@ -7,6 +7,7 @@ package trabalho1dsd;
 
 import trabalho1dsd.dao.*;
 import trabalho1dsd.model.Jogador;
+import trabalho1dsd.model.Pessoa;
 import trabalho1dsd.model.Tecnico;
 import trabalho1dsd.model.Time;
 
@@ -81,7 +82,7 @@ public class Servidor {
                             out.println("Sem jogadores cadastrados");
                             break;
                         }
-                        Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
+                        Jogador j = jogadorDAO.encontrarPorCpf(campos[1]);
                         if (j != null) {
                             jogadorDAO.excluir(j);
                             out.println("Jogador removido com sucesso");
@@ -143,7 +144,7 @@ public class Servidor {
                             out.println("Sem tecnicos cadastrados");
                             break;
                         }
-                        Tecnico t = tecnicoDAO.encontrarPorCpf(campos[2]);
+                        Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
                         if (t != null) {
                             tecnicoDAO.excluir(t);
                             out.println("Tecnico removido com sucesso");
@@ -241,7 +242,8 @@ public class Servidor {
                         if (t != null) {
                             Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
                             if (j != null) {
-                                if(t.findPessoaByCpf(campos[2]) != null && j.getCpf().equalsIgnoreCase(t.findPessoaByCpf(campos[2]).getCpf())){
+                                Pessoa pessoaExistente = t.findPessoaByCpf(campos[2]);
+                                if(pessoaExistente != null && j.getCpf().equalsIgnoreCase(pessoaExistente.getCpf())){
                                     out.println("Há jogador com o mesmo cpf já inserido no time");
                                 } else {
                                     t.addPessoa(j);
@@ -268,7 +270,7 @@ public class Servidor {
 
                         Time t = timeDAO.encontrarPorNome(campos[1]);
                         if (t != null) {
-                            Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
+                         Pessoa j = t.findPessoaByCpf(campos[2]);
                             if (j != null) {
                                 t.removePessoa(j);
                                 out.println("Jogador removido do time com sucesso");
@@ -296,8 +298,9 @@ public class Servidor {
                         if (t != null) {
                             Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
                             if (tec != null) {
-                                if(t.findPessoaByCpf(campos[2]) != null && tec.getCpf().equalsIgnoreCase(t.findPessoaByCpf(campos[2]).getCpf())){
-                                    out.println("Há um Tecnico já inserido no time");
+                                Pessoa pessoaExistente = t.findPessoaByCpf(campos[2]);
+                                if(pessoaExistente != null && tec.getCpf().equalsIgnoreCase(pessoaExistente.getCpf())){
+                                    out.println("Há um tecnico com o mesmo cpf já inserido no time");
                                 } else {
                                     t.addPessoa(tec);
                                     out.println("Tecnico inserido no time com sucesso");
@@ -323,7 +326,7 @@ public class Servidor {
 
                         Time t = timeDAO.encontrarPorNome(campos[1]);
                         if (t != null) {
-                            Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
+                            Pessoa tec = t.findPessoaByCpf(campos[2]);
                             if (tec != null) {
                                 t.removePessoa(tec);
                                 out.println("Tecnico removido do time com sucesso");
