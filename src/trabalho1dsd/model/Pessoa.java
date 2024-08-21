@@ -12,7 +12,6 @@ public class Pessoa {
     private String cpf;
     private String nome;
     private String endereco;
-    private Time time;
 
     public String getCpf() {
         return cpf;
@@ -38,23 +37,14 @@ public class Pessoa {
         this.endereco = endereco;
     }
 
-    public Time getTime() {
-        return time;
-    }
-
-    public void setTime(Time time) {
-        this.time = time;
-    }
-
-    public Pessoa(String cpf, String nome, String endereco, Time time) {
+    public Pessoa(String cpf, String nome, String endereco) {
         this.cpf = cpf;
         this.nome = nome;
         this.endereco = endereco;
-        this.time = time;
     }
 
     @Override
     public String toString() {
-        return this.getCpf() + ";" + this.getNome() + ";" + this.getEndereco() + ";" + (this.getTime() != null ? this.getTime().getNome() : "Sem time");
+        return this.getCpf() + ";" + this.getNome() + ";" + this.getEndereco();
     }
 }

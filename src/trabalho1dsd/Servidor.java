@@ -5,7 +5,6 @@
 package trabalho1dsd;
 
 
-
 import trabalho1dsd.dao.*;
 import trabalho1dsd.model.Jogador;
 import trabalho1dsd.model.Tecnico;
@@ -46,7 +45,7 @@ public class Servidor {
                             jogadorDAO.salvar(j);
                             out.println("Jogador cadastrado com sucesso");
                         } else {
-                            out.println("Já existe uma pessoa com este cpf cadastrado");
+                            out.println("Já existe um jogador com este cpf cadastrado");
                         }
                         break;
                     }
@@ -82,7 +81,7 @@ public class Servidor {
                             out.println("Sem jogadores cadastrados");
                             break;
                         }
-                        Jogador j = jogadorDAO.encontrarPorCpf(campos[1]);
+                        Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
                         if (j != null) {
                             jogadorDAO.excluir(j);
                             out.println("Jogador removido com sucesso");
@@ -104,12 +103,12 @@ public class Servidor {
                         break;
                     }
                     case "INSERT_TECNICO": {
-                        if(tecnicoDAO.encontrarPorCpf(campos[1]) == null){
+                        if (tecnicoDAO.encontrarPorCpf(campos[1]) == null) {
                             Tecnico t = new Tecnico(campos[1], campos[2], campos[3], campos[4], campos[5], null);
                             tecnicoDAO.salvar(t);
                             out.println("Tecnico cadastrado com sucesso");
                         } else {
-                            out.println("Já foi cadastrado uma pessoa com este cpf");
+                            out.println("Já foi cadastrado um tecnico com este cpf");
                         }
                         break;
                     }
@@ -144,7 +143,7 @@ public class Servidor {
                             out.println("Sem tecnicos cadastrados");
                             break;
                         }
-                        Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
+                        Tecnico t = tecnicoDAO.encontrarPorCpf(campos[2]);
                         if (t != null) {
                             tecnicoDAO.excluir(t);
                             out.println("Tecnico removido com sucesso");
@@ -165,7 +164,7 @@ public class Servidor {
                         break;
                     }
                     case "INSERT_TIME": {
-                        if(timeDAO.encontrarPorNome(campos[1]) == null) {
+                        if (timeDAO.encontrarPorNome(campos[1]) == null) {
                             Time t = new Time(campos[1], campos[2], campos[3], Integer.parseInt(campos[4]));
                             timeDAO.salvar(t);
                             out.println("Time cadastrado com sucesso");
@@ -215,62 +214,15 @@ public class Servidor {
                         break;
                     }
                     case "LIST_TIME": {
-//                        if (timeDAO.getTimes().isEmpty()) {
-//                            out.println(0);
-//                            break;
-//                        }
-//                        out.println(timeDAO.getTimes().size());
-//                        for (Time t : timeDAO.getTimes()) {
-//                            out.println(t.toString());
-//                        }
-//                        break;
                         if (timeDAO.getTimes().isEmpty()) {
                             out.println(0);
                             break;
                         }
                         out.println(timeDAO.getTimes().size());
-                        
-                        String retorno = "";
-                        
-                        for (Time time : timeDAO.getTimes()) {
-                            retorno += time.toString();
-                            
-                            for (Tecnico tec : tecnicoDAO.getTecnicos()) {
-                                if (tec.getTime() != null) {
-                                    String nomeTime = time.getNome();
-                                    String timeTecnico = tec.getTime().getNome();
-                                    
-                                    System.out.println("?? " + nomeTime.equals(timeTecnico));
-                                    
-                                    if (nomeTime.equals(timeTecnico)) {
-                                        System.out.println("É igual");
-                                        retorno += " -- TECNICO: " + tec.toString();
-                                        System.out.println(retorno);
-                                    } else {
-                                        System.out.println("Não é igual");
-                                    }
-                                }
-                            }
-                            
-                            for (Jogador j : jogadorDAO.getJogadores()) {
-                                if (j.getTime() != null) {
-                                    String nomeTime = time.getNome();
-                                    String timeJogador = j.getTime().getNome();
-                                    
-                                    System.out.println("?? " + nomeTime.equals(timeJogador));
-                                    
-                                    if (nomeTime.equalsIgnoreCase(timeJogador)) {
-                                        System.out.println("É igual");
-                                        retorno += " -- JOGADOR: " + j.toString();
-                                        System.out.println(retorno);
-                                    } else {
-                                        System.out.println("Não é igual");
-                                    }
-                                }
-                            }
+                        for (Time t : timeDAO.getTimes()) {
+                            out.println(t.toString());
                         }
-                        
-                        out.println(retorno);
+
                         break;
                     }
                     case "INSERT_JOGADOR_TIME": {
@@ -285,13 +237,16 @@ public class Servidor {
                         }
 
                         Time t = timeDAO.encontrarPorNome(campos[1]);
-                        
+
                         if (t != null) {
                             Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
                             if (j != null) {
-//                                t.addPessoa(j);
-                                j.setTime(t);
-                                out.println("Jogador inserido no time com sucesso");
+                                if(t.findPessoaByCpf(campos[2]) != null && j.getCpf().equalsIgnoreCase(t.findPessoaByCpf(campos[2]).getCpf())){
+                                    out.println("Há jogador com o mesmo cpf já inserido no time");
+                                } else {
+                                    t.addPessoa(j);
+                                    out.println("Jogador inserido no time com sucesso");
+                                }
                             } else {
                                 out.println("Jogador não encontrado");
                             }
@@ -315,8 +270,7 @@ public class Servidor {
                         if (t != null) {
                             Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
                             if (j != null) {
-//                                t.removePessoa(j);
-                                j.setTime(null);
+                                t.removePessoa(j);
                                 out.println("Jogador removido do time com sucesso");
                             } else {
                                 out.println("Jogador não encontrado");
@@ -343,9 +297,12 @@ public class Servidor {
                         if (t != null) {
                             Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
                             if (tec != null) {
-//                                t.addPessoa(tec);
-                                tec.setTime(t);
-                                out.println("Tecnico inserido no time com sucesso");
+                                if(t.findPessoaByCpf(campos[2]) != null && tec.getCpf().equalsIgnoreCase(t.findPessoaByCpf(campos[2]).getCpf())){
+                                    out.println("Há um Tecnico já inserido no time");
+                                } else {
+                                    t.addPessoa(tec);
+                                    out.println("Tecnico inserido no time com sucesso");
+                                }
                             } else {
                                 out.println("Tecnico não encontrado");
                             }
@@ -369,8 +326,7 @@ public class Servidor {
                         if (t != null) {
                             Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
                             if (tec != null) {
-//                                t.removePessoa(tec);
-                                tec.setTime(null);
+                                t.removePessoa(tec);
                                 out.println("Tecnico removido do time com sucesso");
                             } else {
                                 out.println("Tecnico não encontrado");

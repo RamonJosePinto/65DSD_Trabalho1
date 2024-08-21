@@ -14,7 +14,7 @@ public class Jogador extends Pessoa{
     private int numero;
 
     public Jogador(String cpf, String nome, String endereco, String posicao, String nacionalidade, int numero, Time time) {
-        super(cpf, nome, endereco, time);
+        super(cpf, nome, endereco);
         this.posicao = posicao;
         this.nacionalidade = nacionalidade;
         this.numero = numero;
