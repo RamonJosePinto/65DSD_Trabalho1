@@ -107,9 +107,9 @@ public class Servidor {
                         if (tecnicoDAO.encontrarPorCpf(campos[1]) == null) {
                             Tecnico t = new Tecnico(campos[1], campos[2], campos[3], campos[4], campos[5], null);
                             tecnicoDAO.salvar(t);
-                            out.println("Tecnico cadastrado com sucesso");
+                            out.println("Técnico cadastrado com sucesso");
                         } else {
-                            out.println("Já foi cadastrado um tecnico com este cpf");
+                            out.println("Já foi cadastrado um técnico com este cpf");
                         }
                         break;
                     }
@@ -120,36 +120,36 @@ public class Servidor {
                             t.setEndereco(campos[3]);
                             t.setVigenciaInicio(campos[4]);
                             t.setVigenciaTermino(campos[5]);
-                            out.println("Tecnico atualizado com sucesso");
+                            out.println("Técnico atualizado com sucesso");
                         } else {
-                            out.println("Tecnico não encontrado");
+                            out.println("Técnico não encontrado");
                         }
                         break;
                     }
                     case "GET_TECNICO": {
                         if (tecnicoDAO.getTecnicos().isEmpty()) {
-                            out.println("Sem tecnicos cadastrados");
+                            out.println("Sem técnicos cadastrados");
                             break;
                         }
                         Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
                         if (t != null) {
                             out.println(t.toString());
                         } else {
-                            out.println("Tecnico não encontrado");
+                            out.println("Técnico não encontrado");
                         }
                         break;
                     }
                     case "DELETE_TECNICO": {
                         if (tecnicoDAO.getTecnicos().isEmpty()) {
-                            out.println("Sem tecnicos cadastrados");
+                            out.println("Sem técnicos cadastrados");
                             break;
                         }
                         Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
                         if (t != null) {
                             tecnicoDAO.excluir(t);
-                            out.println("Tecnico removido com sucesso");
+                            out.println("Técnico removido com sucesso");
                         } else {
-                            out.println("Tecnico não encontrado");
+                            out.println("Técnico não encontrado");
                         }
                         break;
                     }
@@ -244,7 +244,7 @@ public class Servidor {
                             if (j != null) {
                                 Pessoa pessoaExistente = t.findPessoaByCpf(campos[2]);
                                 if(pessoaExistente != null && j.getCpf().equalsIgnoreCase(pessoaExistente.getCpf())){
-                                    out.println("Há jogador com o mesmo cpf já inserido no time");
+                                    out.println("Há um jogador com o mesmo cpf já inserido no time");
                                 } else {
                                     t.addPessoa(j);
                                     out.println("Jogador inserido no time com sucesso");
@@ -285,7 +285,7 @@ public class Servidor {
                     }
                     case "INSERT_TECNICO_TIME": {
                         if (tecnicoDAO.getTecnicos().isEmpty()) {
-                            out.println("Sem tecnicos cadastrados");
+                            out.println("Sem técnicos cadastrados");
                             break;
                         }
 
@@ -300,13 +300,13 @@ public class Servidor {
                             if (tec != null) {
                                 Pessoa pessoaExistente = t.findPessoaByCpf(campos[2]);
                                 if(pessoaExistente != null && tec.getCpf().equalsIgnoreCase(pessoaExistente.getCpf())){
-                                    out.println("Há um tecnico com o mesmo cpf já inserido no time");
+                                    out.println("Há um técnico com o mesmo cpf já inserido no time");
                                 } else {
                                     t.addPessoa(tec);
-                                    out.println("Tecnico inserido no time com sucesso");
+                                    out.println("Técnico inserido no time com sucesso");
                                 }
                             } else {
-                                out.println("Tecnico não encontrado");
+                                out.println("Técnico não encontrado");
                             }
                         } else {
                             out.println("Time não encontrado");
@@ -315,7 +315,7 @@ public class Servidor {
                     }
                     case "DELETE_TECNICO_TIME": {
                         if (tecnicoDAO.getTecnicos().isEmpty()) {
-                            out.println("Sem tecnicos cadastrados");
+                            out.println("Sem técnicos cadastrados");
                             break;
                         }
 
@@ -329,9 +329,9 @@ public class Servidor {
                             Pessoa tec = t.findPessoaByCpf(campos[2]);
                             if (tec != null) {
                                 t.removePessoa(tec);
-                                out.println("Tecnico removido do time com sucesso");
+                                out.println("Técnico removido do time com sucesso");
                             } else {
-                                out.println("Tecnico não encontrado");
+                                out.println("Técnico não encontrado");
                             }
                         } else {
                             out.println("Time não encontrado");
