@@ -13,7 +13,7 @@ public class Tecnico extends Pessoa {
     private String vigenciaTermino;
 
     public Tecnico(String cpf, String nome, String endereco, String vigenciaInicio, String vigenciaTermino, Time time) {
-        super(cpf, nome, endereco, time);
+        super(cpf, nome, endereco);
         this.vigenciaInicio = vigenciaInicio;
         this.vigenciaTermino = vigenciaTermino;
     }
