@@ -40,6 +40,7 @@ public class TimeDAOImpl implements TimeDAO {
             for(Pessoa p : t.getPessoas()){
                 if(p.getCpf().equalsIgnoreCase(cpf)){
                     t.removePessoa(p);
+                    break;
                 }
             }
         }
