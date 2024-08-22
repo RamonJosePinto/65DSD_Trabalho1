@@ -68,7 +68,7 @@ public class Time {
         this.pessoas.remove(pessoa);
     }
 
-    public Pessoa findPessoaByCpf(String cpf) {
+    public Pessoa buscarPessoaPorCpf(String cpf) {
         for (Pessoa p : pessoas) {
             if (p.getCpf().equalsIgnoreCase(cpf)) {
                 return p;

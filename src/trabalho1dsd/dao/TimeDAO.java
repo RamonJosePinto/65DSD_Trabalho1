@@ -9,4 +9,5 @@ public interface TimeDAO {
     void salvar(Time t);
     void excluir(Time t);
     List<Time> getTimes();
+    void removerDeTodosTimes(String cpf);
 }

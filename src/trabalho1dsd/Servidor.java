@@ -167,6 +167,7 @@ public class Servidor {
             Jogador j = jogadorDAO.encontrarPorCpf(campos[1]);
             if (j != null) {
                 jogadorDAO.excluir(j);
+                timeDAO.removerDeTodosTimes(campos[1]);
                 out.println("Jogador removido com sucesso");
             } else {
                 out.println("Jogador não encontrado");
@@ -230,6 +231,7 @@ public class Servidor {
             Tecnico t = tecnicoDAO.encontrarPorCpf(campos[1]);
             if (t != null) {
                 tecnicoDAO.excluir(t);
+                timeDAO.removerDeTodosTimes(campos[1]);
                 out.println("Técnico removido com sucesso");
             } else {
                 out.println("Técnico não encontrado");
@@ -322,7 +324,7 @@ public class Servidor {
                 if (t != null) {
                     Jogador j = jogadorDAO.encontrarPorCpf(campos[2]);
                     if (j != null) {
-                        Pessoa pessoaExistente = t.findPessoaByCpf(campos[2]);
+                        Pessoa pessoaExistente = t.buscarPessoaPorCpf(campos[2]);
                         if (pessoaExistente != null && j.getCpf().equalsIgnoreCase(pessoaExistente.getCpf())) {
                             out.println("Há um jogador com o mesmo cpf já inserido no time");
                         } else {
@@ -350,7 +352,7 @@ public class Servidor {
 
                 Time t = timeDAO.encontrarPorNome(campos[1]);
                 if (t != null) {
-                    Pessoa j = t.findPessoaByCpf(campos[2]);
+                    Pessoa j = t.buscarPessoaPorCpf(campos[2]);
                     if (j != null) {
                         t.removePessoa(j);
                         out.println("Jogador removido do time com sucesso");
@@ -377,7 +379,7 @@ public class Servidor {
                 if (t != null) {
                     Tecnico tec = tecnicoDAO.encontrarPorCpf(campos[2]);
                     if (tec != null) {
-                        Pessoa pessoaExistente = t.findPessoaByCpf(campos[2]);
+                        Pessoa pessoaExistente = t.buscarPessoaPorCpf(campos[2]);
                         if (pessoaExistente != null && tec.getCpf().equalsIgnoreCase(pessoaExistente.getCpf())) {
                             out.println("Há um técnico com o mesmo cpf já inserido no time");
                         } else {
@@ -405,7 +407,7 @@ public class Servidor {
 
                 Time t = timeDAO.encontrarPorNome(campos[1]);
                 if (t != null) {
-                    Pessoa tec = t.findPessoaByCpf(campos[2]);
+                    Pessoa tec = t.buscarPessoaPorCpf(campos[2]);
                     if (tec != null) {
                         t.removePessoa(tec);
                         out.println("Técnico removido do time com sucesso");
